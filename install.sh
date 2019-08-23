@@ -11,6 +11,16 @@ sudo true
 # sudo apt-get update
 # sudo apt-get install lxc-docker -y
 
+# configure log size limit
+cat <<END | sudo tee /etc/docker/daemon.json
+{
+   "log-driver": "json-file",
+   "log-opts": {
+     "max-size": "10m"
+   }
+}
+END
+
 # Alternatively you can use the official docker install script
 wget -qO- https://get.docker.com/ | sh
 
@@ -19,6 +29,9 @@ wget -qO- https://get.docker.com/ | sh
 COMPOSE_VERSION=`git ls-remote -t https://github.com/docker/compose | sed 's|.*/\(.*\)$|\1|' | grep -v '\^' | sort -t. -k1,1nr -k2,2nr -k3,3nr | head -n1`
 sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
 sudo chmod +x /usr/local/bin/docker-compose
+
+
+
 #sudo sh -c "curl -L https://raw.githubusercontent.com/docker/compose/${COMPOSE_VERSION}/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose"
 
 # Install docker-cleanup command
