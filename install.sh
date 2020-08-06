@@ -12,6 +12,7 @@ sudo true
 # sudo apt-get install lxc-docker -y
 
 # configure log size limit
+sudo touch /etc/docker/daemon.json
 cat <<END | sudo tee /etc/docker/daemon.json
 {
    "log-driver": "json-file",
